@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useModal } from "../../context/modal.context";
+import { useModal } from "../../context/useModal";
 import Backdrop from "./Backdrop";
 
 function Modal({ content, handleClickModalDelete }) {

@@ -25,6 +25,8 @@ function Header() {
 }
 
 const HeaderWrapper = styled.section`
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: row;
 

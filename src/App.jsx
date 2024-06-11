@@ -1,7 +1,7 @@
 import { RouterProvider } from "react-router-dom";
 import GlobalStyle from "./GlobalStyle";
-import { ModalProvider } from "./context/modal.context";
 import ExpenditureProvider from "./provider/ExpenditureProvider";
+import { ModalProvider } from "./provider/ModalProvider";
 import QueryProvider from "./provider/QueryProvider";
 import router from "./routes/router";
 

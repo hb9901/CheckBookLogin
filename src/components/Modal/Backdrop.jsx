@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { useModal } from "../../context/modal.context";
+import { useModal } from "../../context/useModal";
+
 
 function Backdrop({ children }) {
   const modal = useModal();
