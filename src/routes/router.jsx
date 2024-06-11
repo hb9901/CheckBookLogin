@@ -4,7 +4,7 @@ import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import MyPage from "../pages/MyPage";
 import PostDetailPage from "../pages/PostDetailPage";
-import RegisterPage from "../pages/RegisterPage/RegisterPage";
+import SignUpPage from "../pages/SignUpPage/SignUpPage";
 
 const router = createBrowserRouter([
   {
@@ -29,8 +29,8 @@ const router = createBrowserRouter([
     element: <LoginPage />,
   },
   {
-    path: "/register",
-    element: <RegisterPage />,
+    path: "/signUp",
+    element: <SignUpPage />,
   },
 ]);
 export default router;

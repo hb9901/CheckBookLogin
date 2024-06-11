@@ -1,19 +1,25 @@
-import axios from "axios";
-
 class UserAPI {
-  #client;
+  #axios;
 
-  constructor(client) {
-    this.#client = client;
+  constructor(axios) {
+    this.#axios = axios;
   }
 
-  async registerUser(id, pw, nickname) {
-    const response = await axios.post("/register", id, pw, nickname);
-    const data = response.data;
-    console.log(data);
-    // if(data.success){ 
-    //   alert("회원가입을 축하합니다!");
+  async signUp(data) {
+    const path = "/register";
+    const response = await this.#axios.post(path, data);
+    const result = response.data.resuslt;
 
-    // }
+    return result;
+  }
+
+  async logIn(data) {
+    const path = "/login";
+    const response = await this.#axios.post(path, data);
+    const result = response.data.result;
+
+    return result
   }
 }
+
+export default UserAPI;

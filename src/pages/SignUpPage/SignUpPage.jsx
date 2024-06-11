@@ -1,15 +1,16 @@
 import styled from "styled-components";
-import Register from "../../components/Register";
 
-function RegisterPage() {
+import SignUp from "../../components/SignUp";
+
+function SignUpPage() {
   return (
     <MainWrapper>
-      <Register />
+      <SignUp />
     </MainWrapper>
   );
 }
 
-export default RegisterPage;
+export default SignUpPage;
 
 const MainWrapper = styled.main`
   display: flex;

@@ -4,54 +4,58 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import api from "../../api/api";
 
-function Login() {
+function SignUp() {
   const navigate = useNavigate();
-  const { mutateAsync: logIn } = useMutation({
-    mutationFn: (data) => api.user.logIn(data),
+  const { mutateAsync: signUp } = useMutation({
+    mutationFn: (data) => api.user.signUp(data),
   });
   const idRef = useRef(null);
   const passwordRef = useRef(null);
+  const nicknameRef = useRef(null);
 
-  const handleClickLogIn = async () => {
+  const handleClickRegister = async () => {
     try {
       const id = idRef.current.value;
       const password = passwordRef.current.value;
-      const data = { id, password };
+      const nickname = nicknameRef.current.value;
+      const data = { id, password, nickname };
 
-      await logIn(data);
-
-      alert("로그인 성공!");
-      navigate("/");
+      await signUp(data);
+      alert("회원가입을 축하합니다!");
+      navigate("/login");
     } catch {
-      alert("로그인 실패!");
+      alert("회원가입 실패");
     }
   };
 
-  const handleClickRegister = () => {
-    navigate("/signUp");
+  const handleClickLogin = async () => {
+    navigate("/login");
   };
+
   return (
     <>
-      <Title>로그인</Title>
+      <Title>회원가입</Title>
       <InputForm>
         <InputLabel>아이디</InputLabel>
-        <Input ref={idRef} placeholder="아이디" />
+        <Input type="text" ref={idRef} placeholder="아이디" />
       </InputForm>
       <InputForm>
         <InputLabel>비밀번호</InputLabel>
-        <Input ref={passwordRef} placeholder="비밀번호" />
+        <Input type="password" ref={passwordRef} placeholder="비밀번호" />
       </InputForm>
-      <Btn onClick={handleClickLogIn} $color="#a0a0a0">
+      <InputForm>
+        <InputLabel>닉네임</InputLabel>
+        <Input type="text" ref={nicknameRef} placeholder="닉네임" />
+      </InputForm>
+      <Btn onClick={handleClickRegister} $color="#a0a0a0">회원가입</Btn>
+      <Btn onClick={handleClickLogin} $color="#6C757D">
         로그인
-      </Btn>
-      <Btn onClick={handleClickRegister} $color="#6C757D">
-        회원가입
       </Btn>
     </>
   );
 }
 
-export default Login;
+export default SignUp;
 
 const Title = styled.h2``;
 

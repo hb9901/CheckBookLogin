@@ -1,15 +1,17 @@
 import axios from "axios";
+import UserAPI from "./user.api";
 
 const BASE_URL = "https://moneyfulpublicpolicy.co.kr";
 
 class API {
-  #baseURL = BASE_URL;
-  #client;
+  #axios;
 
   user;
 
   constructor() {
-    this.#client = axios.create({ baseURL: this.#baseURL });
+    this.#axios = axios.create({ baseURL: BASE_URL });
+
+    this.user = new UserAPI(this.#axios);
   }
 }
 
