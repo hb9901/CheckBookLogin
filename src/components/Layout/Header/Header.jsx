@@ -1,11 +1,15 @@
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { AuthContext } from "../../../context/auth.context";
 
 function Header() {
   const navigate = useNavigate();
+  const { userInfo, isAuthenticated, logOut } = useContext(AuthContext);
+
   const handleOnLoginClick = () => {
-    navigate("/login");
-  }
+    isAuthenticated ? logOut() : navigate("/login");
+  };
 
   return (
     <HeaderWrapper>
@@ -15,10 +19,12 @@ function Header() {
       </HeaderLeft>
       <HeaderRight>
         <UserInfo>
-          <UserImg src="/public/warningSign.png" />
-          <UserNickName>이름</UserNickName>
+          <UserImg src={userInfo.avatar} />
+          <UserNickName>{userInfo.nickname}</UserNickName>
         </UserInfo>
-        <LoginBtn onClick={handleOnLoginClick}>로그인 </LoginBtn>
+        <LoginBtn onClick={handleOnLoginClick}>
+          {isAuthenticated ? "로그아웃" : "로그인"}
+        </LoginBtn>
       </HeaderRight>
     </HeaderWrapper>
   );

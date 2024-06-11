@@ -20,9 +20,9 @@ function Login() {
       const password = passwordRef.current.value;
       const data = { id, password };
 
-      await mutateAsync(data);
+      const responseData = await mutateAsync(data);
 
-      logIn(data.accessToken);
+      logIn(responseData);
       alert("로그인 성공!");
       navigate("/");
     } catch {

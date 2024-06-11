@@ -35,6 +35,8 @@ const MainWrapper = styled.main`
   gap: 20px;
   margin: 0px auto;
   padding: 2rem;
+
+  box-sizing: border-box;
 `;
 
 const SectionWrapper = styled.section`

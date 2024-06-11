@@ -20,5 +20,7 @@ const MainWrapper = styled.main`
 
   gap: 20px;
   margin: 0px auto;
-  padding-top: 2rem;
+  padding: 2rem;
+
+  box-sizing: border-box;
 `;

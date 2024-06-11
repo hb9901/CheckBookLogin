@@ -8,17 +8,17 @@ class UserAPI {
   async signUp(data) {
     const path = "/register";
     const response = await this.#axios.post(path, data);
-    const result = response.data.resuslt;
+    const responseData = response.data;
 
-    return result;
+    return responseData;
   }
 
   async logIn(data) {
     const path = "/login";
     const response = await this.#axios.post(path, data);
-    const result = response.data.result;
+    const responseData = response.data;
 
-    return result
+    return responseData;
   }
 }
 
