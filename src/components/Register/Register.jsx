@@ -1,6 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-function Register({ handleClickRegister }) {
+function Register() {
+  const navigate = useNavigate();
+
+  const handleClickRegister = () => {
+    navigate("/login");
+  };
   return (
     <>
       <Title>회원가입</Title>
