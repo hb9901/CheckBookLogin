@@ -1,12 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import api from "../../api/api";
+import { AuthContext } from "../../context/auth.context";
 
 function Login() {
   const navigate = useNavigate();
-  const { mutateAsync: logIn } = useMutation({
+  const { logIn } = useContext(AuthContext);
+  const { mutateAsync } = useMutation({
     mutationFn: (data) => api.user.logIn(data),
   });
   const idRef = useRef(null);
@@ -18,8 +20,9 @@ function Login() {
       const password = passwordRef.current.value;
       const data = { id, password };
 
-      await logIn(data);
+      await mutateAsync(data);
 
+      logIn(data.accessToken);
       alert("로그인 성공!");
       navigate("/");
     } catch {
@@ -35,11 +38,11 @@ function Login() {
       <Title>로그인</Title>
       <InputForm>
         <InputLabel>아이디</InputLabel>
-        <Input ref={idRef} placeholder="아이디" />
+        <Input type="text" ref={idRef} placeholder="아이디" />
       </InputForm>
       <InputForm>
         <InputLabel>비밀번호</InputLabel>
-        <Input ref={passwordRef} placeholder="비밀번호" />
+        <Input type="password" ref={passwordRef} placeholder="비밀번호" />
       </InputForm>
       <Btn onClick={handleClickLogIn} $color="#a0a0a0">
         로그인
