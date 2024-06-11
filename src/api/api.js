@@ -7,6 +7,7 @@ class API {
   #axios;
 
   user;
+  expenditures;
 
   constructor() {
     this.#axios = axios.create({ baseURL: BASE_URL });

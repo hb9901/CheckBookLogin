@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../components/Layout";
+import expenditureLoader from "../loaders/expenditure.loader";
 import userInfoLoader from "../loaders/userInfo.loader";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
@@ -16,10 +17,12 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
+        loader: expenditureLoader,
       },
       {
         path: "/:id",
         element: <PostDetailPage />,
+        loader: expenditureLoader,
       },
     ],
   },

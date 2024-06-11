@@ -1,18 +1,32 @@
-import { ExpenditureContext } from "@/context/expenditure.context";
+import { useQuery } from "@tanstack/react-query";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import styled from "styled-components";
+import jsonApi from "../../api/jsonApi";
+import { MonthContext } from "../../context/month.context";
 
 function Expenditures() {
-  const monthExpenditures = useContext(ExpenditureContext).monthExpenditures;
+  const initExpenditures = useLoaderData();
+  const { curMonth } = useContext(MonthContext);
+  const { data: expenditures, isLoading } = useQuery({
+    queryKey: ["expenditures"],
+    queryFn: () => jsonApi.expenditures.getExpenditures(),
+    initialData: initExpenditures,
+  });
+
+  const monthExpenditures = expenditures.filter((expenditure) => {
+    const date = new Date(expenditure.date);
+    return date.getMonth() === curMonth;
+  });
+
+
   const [category, setCategory] = useState("date");
 
-  category &&
-    monthExpenditures.sort(function compare(a, b) {
-      if (a[category] > b[category]) return 1;
-      if (a[category] < b[category]) return -1;
-      return 0;
-    });
+  expenditures.sort(function compare(a, b) {
+    if (a[category] > b[category]) return 1;
+    if (a[category] < b[category]) return -1;
+    return 0;
+  });
 
   const handleChangeDropMenu = ({ target }) => {
     setCategory(target.value);
@@ -35,9 +49,10 @@ function Expenditures() {
             >
               <Expenditure>
                 <ListLeft>
-                  <Date>{expenditure.date}</Date>
+                  <DateStr>{expenditure.date}</DateStr>
                   <Item>
-                    {expenditure.item} - {expenditure.description}
+                    {expenditure.item} - {expenditure.description} (by{" "}
+                    {expenditure.createdBy})
                   </Item>
                 </ListLeft>
                 <ListRight>
@@ -72,7 +87,7 @@ const Select = styled.select`
   color: rgb(0, 123, 255);
   background-color: rgb(249, 249, 249);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
-  
+
   cursor: pointer;
   &:focus {
     outline: none;
@@ -121,7 +136,7 @@ const ListRight = styled.div`
   flex: 0 0 auto;
 `;
 
-const Date = styled.div`
+const DateStr = styled.div`
   margin-bottom: 5px;
 
   font-size: 14px;

@@ -1,6 +1,9 @@
-import { ExpenditureContext } from "@/context/expenditure.context";
+import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
+import { useLoaderData } from "react-router-dom";
 import styled from "styled-components";
+import jsonApi from "../../api/jsonApi";
+import { MonthContext } from "../../context/month.context";
 import {
   calPercentage,
   calTotalCost,
@@ -11,8 +14,19 @@ import {
 } from "./functions";
 
 function ExpenditureGraph() {
-  const monthExpenditures = useContext(ExpenditureContext).monthExpenditures;
-  const curMonth = useContext(ExpenditureContext).curMonth;
+  const initExpenditures = useLoaderData();
+  const { curMonth } = useContext(MonthContext);
+  const { data: expenditures, isLoading } = useQuery({
+    queryKey: ["expenditures"],
+    queryFn: () => jsonApi.expenditures.getExpenditures(),
+    initialData: initExpenditures,
+  });
+
+  const monthExpenditures = expenditures.filter((expenditure) => {
+    const date = new Date(expenditure.date);
+    return date.getMonth() === curMonth;
+  });
+
   const TOTAL_COST = calTotalCost(monthExpenditures);
   const totalStr = makeCostStr(TOTAL_COST);
   const itemsExpenditureObj = makeItemsExpenditureObj(monthExpenditures);

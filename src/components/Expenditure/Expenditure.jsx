@@ -1,13 +1,20 @@
 import isInputValidate from "@/assets/js/isInputValidate";
 import { ExpenditureContext } from "@/context/expenditure.context";
+import { useQuery } from "@tanstack/react-query";
 import { useContext, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import jsonApi from "../../api/jsonApi";
 import { useModal } from "../../context/useModal";
 
-
 function Expenditure() {
-  const monthExpenditures = useContext(ExpenditureContext).monthExpenditures;
+  const initExpenditures = useLoaderData();
+  const { data: monthExpenditures, isLoading } = useQuery({
+    queryKey: ["expenditures"],
+    queryFn: () => jsonApi.expenditures.getExpenditures(),
+    initialData: initExpenditures,
+  });
+
   const updateExpenditure = useContext(ExpenditureContext).updateExpenditure;
   const deleteExpenditure = useContext(ExpenditureContext).deleteExpenditure;
   const params = useParams();
@@ -18,9 +25,9 @@ function Expenditure() {
   const descriptionRef = useRef("");
   const modal = useModal();
 
-  const expenditure = monthExpenditures.find(
-    (expenditure) => expenditure.id === params.id
-  );
+  const expenditure =
+    monthExpenditures &&
+    monthExpenditures.find((expenditure) => expenditure.id === params.id);
 
   const handleClickModify = () => {
     const modifiedExpenditure = {
@@ -60,7 +67,7 @@ function Expenditure() {
         <Input
           ref={dateRef}
           type="text"
-          defaultValue={expenditure.date}
+          defaultValue={expenditure && expenditure.date}
           data-type="date"
         />
       </InputWrapper>
@@ -69,7 +76,7 @@ function Expenditure() {
         <Input
           ref={itemRef}
           type="text"
-          defaultValue={expenditure.item}
+          defaultValue={expenditure && expenditure.item}
           data-type="item"
           placeholder="지출 항목"
         />
@@ -79,7 +86,7 @@ function Expenditure() {
         <Input
           ref={amountRef}
           type="number"
-          defaultValue={Number(expenditure.amount)}
+          defaultValue={expenditure && Number(expenditure.amount)}
           data-type="amount"
           placeholder="지출 금액"
         />
@@ -89,7 +96,7 @@ function Expenditure() {
         <Input
           ref={descriptionRef}
           type="text"
-          defaultValue={expenditure.description}
+          defaultValue={expenditure && expenditure.description}
           data-type="description"
           placeholder="지출 내용"
         />

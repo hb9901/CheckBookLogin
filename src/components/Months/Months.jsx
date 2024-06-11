@@ -1,16 +1,14 @@
-import { ExpenditureContext } from "@/context/expenditure.context";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
+import { MonthContext } from "../../context/month.context";
 import { months } from "./costants";
 
 function Months() {
-  const [selectedMonth, setSelectedMonth] = useState(useContext(ExpenditureContext).curMonth);
-  const setMonth = useContext(ExpenditureContext).setMonth;
-  
+  const { curMonth, changeMonth } = useContext(MonthContext);
+
   const handleClickMonth = ({ target }) => {
     const month = Number(target.id);
-    setSelectedMonth(month);
-    setMonth(month);
+    changeMonth(month);
     localStorage.setItem("month", month);
   };
 
@@ -23,7 +21,7 @@ function Months() {
             id={index}
             onClick={handleClickMonth}
             value={month}
-            $isSelected={index === selectedMonth}
+            $isSelected={index === curMonth}
           >
             {month}
           </Month>
@@ -63,7 +61,8 @@ const Month = styled.li`
   font-weight: 600;
 
   cursor: pointer;
-  background-color: ${({ $isSelected }) => ($isSelected ? "#2EC4B6" : "#F6F7FA")};
+  background-color: ${({ $isSelected }) =>
+    $isSelected ? "#2EC4B6" : "#F6F7FA"};
   color: ${({ $isSelected }) => ($isSelected ? "white" : "black")};
 
   &:hover {

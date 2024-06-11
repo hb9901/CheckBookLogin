@@ -1,4 +1,5 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import Layout from "../components/Layout";
 
 function Private() {
   const accessToken = localStorage.getItem("accessToken");
@@ -8,7 +9,7 @@ function Private() {
     return <Navigate to="/login" />;
   }
 
-  return <Outlet/>;
+  return <Layout/>;
 }
 
 export default Private;
