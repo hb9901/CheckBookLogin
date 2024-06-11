@@ -1,11 +1,13 @@
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AuthContext } from "../../../context/auth.context";
 
 function Header() {
   const navigate = useNavigate();
-  const { userInfo, isAuthenticated, logOut } = useContext(AuthContext);
+  const data = useLoaderData();
+  const nickname = data && data.nickname;
+  const { isAuthenticated, logOut } = useContext(AuthContext);
 
   const handleOnLoginClick = () => {
     isAuthenticated ? logOut() : navigate("/login");
@@ -19,8 +21,8 @@ function Header() {
       </HeaderLeft>
       <HeaderRight>
         <UserInfo>
-          <UserImg src={userInfo.avatar} />
-          <UserNickName>{userInfo.nickname}</UserNickName>
+          <UserImg />
+          <UserNickName>{isAuthenticated && nickname}</UserNickName>
         </UserInfo>
         <LoginBtn onClick={handleOnLoginClick}>
           {isAuthenticated ? "로그아웃" : "로그인"}

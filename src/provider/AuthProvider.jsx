@@ -3,11 +3,6 @@ import { AuthContext } from "../context/auth.context";
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    userId: "",
-    avatar: "",
-    nickname: "",
-  });
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -16,14 +11,9 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const logIn = ({ userId, avatar, nickname, accessToken }) => {
-    const newUserInfo = {
-      userId,
-      avatar,
-      nickname,
-    };
+  const logIn = ({ accessToken }) => {
     localStorage.setItem("accessToken", accessToken);
-    setUserInfo(newUserInfo);
+
     setIsAuthenticated(true);
   };
 
@@ -33,8 +23,8 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ userInfo, isAuthenticated, logIn, logOut}}>
+    <AuthContext.Provider value={{ isAuthenticated, logIn, logOut }}>
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
