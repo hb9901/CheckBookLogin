@@ -114,6 +114,15 @@
       "description": "탕수육",
       "userId": "yhnujm123",
       "createdBy": "ts"
+    },
+    {
+      "id": "9e1e34bd-b42e-4910-9207-ae282629d254",
+      "date": "2024-04-01",
+      "item": "간식",
+      "amount": 3000,
+      "description": "떡볶이",
+      "userId": "yhnujm123",
+      "createdBy": "ts"
     }
   ]
 }

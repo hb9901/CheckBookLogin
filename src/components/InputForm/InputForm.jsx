@@ -1,7 +1,6 @@
 import isInputValidate from "@/assets/js/isInputValidate";
-import { ExpenditureContext } from "@/context/expenditure.context";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import api from "../../api/api";
 import jsonApi from "../../api/jsonApi";
@@ -11,7 +10,7 @@ function InputForm() {
   const queryClient = useQueryClient();
   const accessToken = localStorage.getItem("accessToken");
   const [expenditure, setExpenditure] = useState(initExpenditure);
-  const { addExpenditure } = useContext(ExpenditureContext);
+
   const { mutateAsync: addExpenditureJson } = useMutation({
     mutationFn: (expenditure) =>
       jsonApi.expenditures.addExpenditure(expenditure),
@@ -32,7 +31,10 @@ function InputForm() {
     setExpenditure((prev) => {
       return {
         ...prev,
-        [target.dataset.type]: target.dataset.type === 'amount' ? Number(target.value) : target.value,
+        [target.dataset.type]:
+          target.dataset.type === "amount"
+            ? Number(target.value)
+            : target.value,
       };
     });
   };
@@ -46,7 +48,6 @@ function InputForm() {
       createdBy: nickname,
     };
     if (!isInputValidate(expenditure)) return;
-    addExpenditure(newExpenditure);
     addExpenditureJson(newExpenditure);
     setExpenditure(initExpenditure);
   };

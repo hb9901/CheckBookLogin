@@ -11,7 +11,7 @@ function ExpenditureProvider({ children }) {
   });
 
   const setInitExpenditures = (expenditures) => {
-    setExpenditures([...expenditures]);
+    setExpenditures(expenditures);
   };
 
   const addExpenditure = (expenditure) => {
