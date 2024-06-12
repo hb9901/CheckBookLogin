@@ -1,30 +1,53 @@
 import isInputValidate from "@/assets/js/isInputValidate";
 import { ExpenditureContext } from "@/context/expenditure.context";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import styled from "styled-components";
+import api from "../../api/api";
+import jsonApi from "../../api/jsonApi";
 import { initExpenditure } from "./constants";
 
 function InputForm() {
+  const queryClient = useQueryClient();
+  const accessToken = localStorage.getItem("accessToken");
   const [expenditure, setExpenditure] = useState(initExpenditure);
-  const addExpenditure = useContext(ExpenditureContext).addExpenditure;
+  const { addExpenditure } = useContext(ExpenditureContext);
+  const { mutateAsync: addExpenditureJson } = useMutation({
+    mutationFn: (expenditure) =>
+      jsonApi.expenditures.addExpenditure(expenditure),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["expenditures"]);
+    },
+  });
+  const { data: userInfo } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => api.user.getUserInfo(accessToken),
+  });
+
+  const { id: userId, nickname } = userInfo
+    ? userInfo
+    : { id: null, nickname: null };
 
   const handleChangeInput = ({ target }) => {
     setExpenditure((prev) => {
       return {
         ...prev,
-        [target.dataset.type]: target.value,
+        [target.dataset.type]: target.dataset.type === 'amount' ? Number(target.value) : target.value,
       };
     });
   };
 
   const handleClickAdd = (e) => {
     e.preventDefault();
-
-    if (!isInputValidate(expenditure)) return;
-    addExpenditure({
+    const newExpenditure = {
       ...expenditure,
       id: crypto.randomUUID(),
-    });
+      userId,
+      createdBy: nickname,
+    };
+    if (!isInputValidate(expenditure)) return;
+    addExpenditure(newExpenditure);
+    addExpenditureJson(newExpenditure);
     setExpenditure(initExpenditure);
   };
 

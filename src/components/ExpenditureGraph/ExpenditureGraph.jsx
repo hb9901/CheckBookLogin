@@ -16,7 +16,7 @@ import {
 function ExpenditureGraph() {
   const initExpenditures = useLoaderData();
   const { curMonth } = useContext(MonthContext);
-  const { data: expenditures, isLoading } = useQuery({
+  const { data: expenditures } = useQuery({
     queryKey: ["expenditures"],
     queryFn: () => jsonApi.expenditures.getExpenditures(),
     initialData: initExpenditures,

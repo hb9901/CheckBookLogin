@@ -69,6 +69,51 @@
       "description": "세광양대창",
       "createdBy": "Me",
       "userId": "asdf"
+    },
+    {
+      "id": "4c5ed7e6-9993-4d21-8030-bbd498020671",
+      "date": "2024-03-01",
+      "item": "간식",
+      "amount": 4000,
+      "description": "떡볶이",
+      "userId": "yhnujm123",
+      "createdBy": "ts"
+    },
+    {
+      "id": "f20c42e3-94f2-45d2-901a-444af1a3260e",
+      "date": "2024-03-02",
+      "item": "간식",
+      "amount": 3000,
+      "description": "튀김",
+      "userId": "yhnujm123",
+      "createdBy": "ts"
+    },
+    {
+      "id": "c33bd871-90db-44a0-8021-6c9fd328d346",
+      "date": "2024-03-04",
+      "item": "간식",
+      "amount": 3000,
+      "description": "탕후루",
+      "userId": "yhnujm123",
+      "createdBy": "ts"
+    },
+    {
+      "id": "cc8d25a9-1f4f-414c-8972-e27d19d9e9f3",
+      "date": "2024-03-05",
+      "item": "점심",
+      "amount": 6000,
+      "description": "햄버거",
+      "userId": "yhnujm123",
+      "createdBy": "ts"
+    },
+    {
+      "id": "e456cdec-7e11-4be9-823b-9d1f0691005b",
+      "date": "2024-02-01",
+      "item": "점심",
+      "amount": 20000,
+      "description": "탕수육",
+      "userId": "yhnujm123",
+      "createdBy": "ts"
     }
   ]
 }

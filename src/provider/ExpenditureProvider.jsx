@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { ExpenditureContext } from "../context/expenditure.context";
-import { initExpenditures } from "./constants";
 
 function ExpenditureProvider({ children }) {
-  const [expenditures, setExpenditures] = useState(initExpenditures);
+  const [expenditures, setExpenditures] = useState([]);
   const [month, setMonth] = useState(Number(localStorage.getItem("month")));
 
   const monthExpenditures = expenditures.filter((expenditure) => {
     const date = new Date(expenditure.date);
     return date.getMonth() === month;
   });
+
+  const setInitExpenditures = (expenditures) => {
+    setExpenditures([...expenditures]);
+  };
 
   const addExpenditure = (expenditure) => {
     setExpenditures((prev) => [...prev, expenditure]);
@@ -37,6 +40,7 @@ function ExpenditureProvider({ children }) {
       value={{
         monthExpenditures,
         curMonth: month,
+        setInitExpenditures,
         addExpenditure,
         updateExpenditure,
         deleteExpenditure,

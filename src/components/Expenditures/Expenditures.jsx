@@ -8,7 +8,7 @@ import { MonthContext } from "../../context/month.context";
 function Expenditures() {
   const initExpenditures = useLoaderData();
   const { curMonth } = useContext(MonthContext);
-  const { data: expenditures, isLoading } = useQuery({
+  const { data: expenditures } = useQuery({
     queryKey: ["expenditures"],
     queryFn: () => jsonApi.expenditures.getExpenditures(),
     initialData: initExpenditures,
@@ -19,10 +19,9 @@ function Expenditures() {
     return date.getMonth() === curMonth;
   });
 
-
   const [category, setCategory] = useState("date");
 
-  expenditures.sort(function compare(a, b) {
+  monthExpenditures.sort(function compare(a, b) {
     if (a[category] > b[category]) return 1;
     if (a[category] < b[category]) return -1;
     return 0;

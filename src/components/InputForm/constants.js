@@ -5,4 +5,6 @@ export const initExpenditure =
     item: "",
     amount: "",
     description: "",
+    userId:"",
+    createdBy: "",
   }

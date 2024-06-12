@@ -9,7 +9,7 @@ import { useModal } from "../../context/useModal";
 
 function Expenditure() {
   const initExpenditures = useLoaderData();
-  const { data: monthExpenditures, isLoading } = useQuery({
+  const { data: monthExpenditures } = useQuery({
     queryKey: ["expenditures"],
     queryFn: () => jsonApi.expenditures.getExpenditures(),
     initialData: initExpenditures,
