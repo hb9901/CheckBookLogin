@@ -36,7 +36,7 @@ export default Months;
 const MonthList = styled.ol`
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   justify-content: center;
   margin: 0;
   padding: 0;
