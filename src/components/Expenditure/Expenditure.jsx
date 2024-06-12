@@ -9,10 +9,9 @@ import { useModal } from "../../context/useModal";
 
 function Expenditure() {
   const initExpenditures = useLoaderData();
-  const accessToken = localStorage.getItem("accessToken");
   const { data: userInfo } = useQuery({
     queryKey: ["user"],
-    queryFn: () => api.user.getUserInfo(accessToken),
+    queryFn: () => api.user.getUserInfo(),
   });
   const { data: monthExpenditures } = useQuery({
     queryKey: ["expenditures"],

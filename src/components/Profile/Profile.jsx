@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import styled from "styled-components";
@@ -6,12 +6,14 @@ import api from "../../api/api";
 
 function Profile() {
   const { nickname, avatar } = useLoaderData();
-
   const nicknameRef = useRef();
   const [imgFile, setImgFile] = useState(avatar);
-
+  const queryClient = useQueryClient();
   const { mutateAsync: updateUserInfo } = useMutation({
     mutationFn: (formData) => api.user.updateUserInfo(formData),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["expenditures"]);
+    },
   });
 
   const handleFileChange = ({ target }) => {
@@ -39,8 +41,7 @@ function Profile() {
       <InputForm>
         <InputLabel>아바타 이미지</InputLabel>
         <Input onChange={handleFileChange} type="file" accept="image/*" />
-        <ImgSection>
-        </ImgSection>
+        <ImgSection></ImgSection>
       </InputForm>
       <Btn onClick={handleUpdateClick}>프로필 업데이트</Btn>
     </Wrapper>
@@ -75,15 +76,6 @@ const Input = styled.input`
 const ImgSection = styled.section`
   display: flex;
   justify-content: center;
-`;
-
-const AvatarImg = styled.div`
-  width: 120px;
-
-  & > img {
-    width: 100%;
-    object-fit: cover;
-  }
 `;
 
 const Btn = styled.button`

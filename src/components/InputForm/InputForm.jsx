@@ -8,7 +8,6 @@ import { initExpenditure } from "./constants";
 
 function InputForm() {
   const queryClient = useQueryClient();
-  const accessToken = localStorage.getItem("accessToken");
   const [expenditure, setExpenditure] = useState(initExpenditure);
 
   const { mutateAsync: addExpenditureJson } = useMutation({
@@ -20,7 +19,7 @@ function InputForm() {
   });
   const { data: userInfo } = useQuery({
     queryKey: ["user"],
-    queryFn: () => api.user.getUserInfo(accessToken),
+    queryFn: () => api.user.getUserInfo(),
   });
 
   const { id: userId, nickname } = userInfo

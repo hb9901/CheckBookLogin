@@ -21,11 +21,12 @@ class UserAPI {
     return responseData;
   }
 
-  async getUserInfo(token) {
+  async getUserInfo() {
+    const accessToken = localStorage.getItem("accessToken");
     const path = "/user";
     const response = await this.#axios.get(path, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
     const responseData = response.data;

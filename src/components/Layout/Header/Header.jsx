@@ -1,12 +1,20 @@
+import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import api from "../../../api/api";
 import { AuthContext } from "../../../context/auth.context";
 
 function Header() {
   const navigate = useNavigate();
-  const data = useLoaderData();
-  const nickname = data && data.nickname;
+  const initUserData = useLoaderData();
+  const { data: userData } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => api.user.getUserInfo(),
+    initialData: initUserData,
+  });
+  const avatar = userData && userData.avatar;
+  const nickname = userData && userData.nickname;
   const { isAuthenticated, logOut } = useContext(AuthContext);
 
   const handleOnLoginClick = () => {
@@ -21,7 +29,7 @@ function Header() {
       </HeaderLeft>
       <HeaderRight>
         <UserInfo>
-          <UserImg />
+          <UserImg>{isAuthenticated && <img src={avatar} />}</UserImg>
           <UserNickName>{isAuthenticated && nickname}</UserNickName>
         </UserInfo>
         <LoginBtn onClick={handleOnLoginClick}>
@@ -60,20 +68,26 @@ const HeaderRight = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 `;
 
 const UserInfo = styled.div`
   display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 20px;
 `;
 
 const UserImg = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
 
-  border-radius: 10px;
+  border-radius: 70%;
+  overflow: hidden;
 
   & > img {
+    width: 100%;
+
     object-fit: cover;
   }
 `;
@@ -83,7 +97,7 @@ const UserNickName = styled.div`
 `;
 
 const LoginBtn = styled.button`
-  height: 30px;
+  padding: 10px 20px;
   border: none;
   border-radius: 4px;
   background-color: #ff4d4d;
