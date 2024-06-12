@@ -1,24 +1,32 @@
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import styled from "styled-components";
+import api from "../../api/api";
 
 function Profile() {
   const { nickname, avatar } = useLoaderData();
 
+  const nicknameRef = useRef();
   const [imgFile, setImgFile] = useState(avatar);
-  const [imgUrl, setImgUrl] = useState();
+
+  const { mutateAsync: updateUserInfo } = useMutation({
+    mutationFn: (formData) => api.user.updateUserInfo(formData),
+  });
 
   const handleFileChange = ({ target }) => {
     const [file] = target.files;
     if (!file) return;
 
     setImgFile(file);
+  };
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setImgUrl(String(reader.result));
-    };
+  const handleUpdateClick = async () => {
+    const formData = new FormData();
+    formData.append("nickname", nicknameRef.current.value);
+    formData.append("avatar", imgFile);
+
+    await updateUserInfo(formData);
   };
 
   return (
@@ -26,20 +34,15 @@ function Profile() {
       <Title>프로필 수정</Title>
       <InputForm>
         <InputLabel>닉네임</InputLabel>
-        <Input defaultValue={nickname && nickname} />
+        <Input ref={nicknameRef} defaultValue={nickname && nickname} />
       </InputForm>
       <InputForm>
         <InputLabel>아바타 이미지</InputLabel>
-        <Input onChange={handleFileChange} type="file" />
+        <Input onChange={handleFileChange} type="file" accept="image/*" />
         <ImgSection>
-          {imgUrl && (
-            <AvatarImg>
-              <img src={imgUrl} />
-            </AvatarImg>
-          )}
         </ImgSection>
       </InputForm>
-      <Btn>프로필 업데이트</Btn>
+      <Btn onClick={handleUpdateClick}>프로필 업데이트</Btn>
     </Wrapper>
   );
 }

@@ -21,21 +21,27 @@ class UserAPI {
     return responseData;
   }
 
-  async getUserInfo(token){
+  async getUserInfo(token) {
     const path = "/user";
     const response = await this.#axios.get(path, {
-      headers:{
+      headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
+    });
     const responseData = response.data;
 
     return responseData;
-  } 
+  }
 
-  async update(data){
+  async updateUserInfo(formData) {
+    const accessToken = localStorage.getItem("accessToken");
     const path = "/profile";
-    const response = await this.#axios.post(path, data);
+    const response = await this.#axios.patch(path, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     const responseData = response.data;
 
     return responseData;

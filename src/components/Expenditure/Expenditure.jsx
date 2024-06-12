@@ -28,8 +28,6 @@ function Expenditure() {
       jsonApi.expenditures.deleteExpenditure(expenditureId),
   });
 
-  // const updateExpenditure = useContext(ExpenditureContext).updateExpenditure;
-  // const deleteExpenditure = useContext(ExpenditureContext).deleteExpenditure;
   const params = useParams();
   const navigate = useNavigate();
   const dateRef = useRef("");
