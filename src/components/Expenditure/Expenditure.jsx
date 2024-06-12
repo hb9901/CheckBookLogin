@@ -1,22 +1,35 @@
 import isInputValidate from "@/assets/js/isInputValidate";
-import { ExpenditureContext } from "@/context/expenditure.context";
-import { useQuery } from "@tanstack/react-query";
-import { useContext, useRef } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRef } from "react";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import api from "../../api/api";
 import jsonApi from "../../api/jsonApi";
 import { useModal } from "../../context/useModal";
 
 function Expenditure() {
   const initExpenditures = useLoaderData();
+  const accessToken = localStorage.getItem("accessToken");
+  const { data: userInfo } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => api.user.getUserInfo(accessToken),
+  });
   const { data: monthExpenditures } = useQuery({
     queryKey: ["expenditures"],
     queryFn: () => jsonApi.expenditures.getExpenditures(),
     initialData: initExpenditures,
   });
+  const { mutateAsync: updateExpenditure } = useMutation({
+    mutationFn: ({ expenditureId, expenditure }) =>
+      jsonApi.expenditures.updateExpenditure({ expenditureId, expenditure }),
+  });
+  const { mutateAsync: deleteExpenditure } = useMutation({
+    mutationFn: (expenditureId) =>
+      jsonApi.expenditures.deleteExpenditure(expenditureId),
+  });
 
-  const updateExpenditure = useContext(ExpenditureContext).updateExpenditure;
-  const deleteExpenditure = useContext(ExpenditureContext).deleteExpenditure;
+  // const updateExpenditure = useContext(ExpenditureContext).updateExpenditure;
+  // const deleteExpenditure = useContext(ExpenditureContext).deleteExpenditure;
   const params = useParams();
   const navigate = useNavigate();
   const dateRef = useRef("");
@@ -39,12 +52,15 @@ function Expenditure() {
     };
 
     if (!isInputValidate(modifiedExpenditure)) return;
-    updateExpenditure(modifiedExpenditure);
+    updateExpenditure({
+      expenditureId: expenditure.id,
+      expenditure: modifiedExpenditure,
+    });
     navigate("/");
   };
 
   const handleClickModalDelete = () => {
-    deleteExpenditure(params.id);
+    deleteExpenditure(expenditure.id);
     modal.close();
     navigate("/");
   };
@@ -52,7 +68,7 @@ function Expenditure() {
   const handleClickDelete = () => {
     modal.open({
       content: "정말로 이 지출 항목을 삭제하시겠습니까?",
-      handleClickModalDelete: handleClickModalDelete,
+      handleClickModalDelete,
     });
   };
 
@@ -103,8 +119,16 @@ function Expenditure() {
       </InputWrapper>
       <br />
       <ButtonWrapper>
-        <ModifyButton onClick={handleClickModify}>수정</ModifyButton>
-        <DeleletButton onClick={handleClickDelete}>삭제</DeleletButton>
+        {userInfo && expenditure.userId === userInfo.id ? (
+          <ModifyButton onClick={handleClickModify}>수정</ModifyButton>
+        ) : (
+          <></>
+        )}
+        {userInfo && expenditure.userId === userInfo.id ? (
+          <DeleletButton onClick={handleClickDelete}>삭제</DeleletButton>
+        ) : (
+          <></>
+        )}
         <GoBackButton onClick={handleClickGoBack}>뒤로 가기</GoBackButton>
       </ButtonWrapper>
     </Wrapper>

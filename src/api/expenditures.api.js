@@ -20,6 +20,21 @@ class ExpendituresAPI {
 
     return responseData;
   }
+
+  async updateExpenditure({ expenditureId, expenditure }) {
+    const path = `/expenses/${expenditureId}`;
+    const response = await this.#axios.patch(path, expenditure);
+    const responseData = response.data;
+
+    return responseData;
+  }
+
+  async deleteExpenditure(expenditureId) {
+    const path = `/expenses/${expenditureId}`;
+    const response = await this.#axios.delete(path);
+
+    console.log(response);
+  }
 }
 
 export default ExpendituresAPI;

@@ -71,29 +71,11 @@
       "userId": "asdf"
     },
     {
-      "id": "4c5ed7e6-9993-4d21-8030-bbd498020671",
-      "date": "2024-03-01",
-      "item": "간식",
-      "amount": 4000,
-      "description": "떡볶이",
-      "userId": "yhnujm123",
-      "createdBy": "ts"
-    },
-    {
       "id": "f20c42e3-94f2-45d2-901a-444af1a3260e",
       "date": "2024-03-02",
       "item": "간식",
       "amount": 3000,
       "description": "튀김",
-      "userId": "yhnujm123",
-      "createdBy": "ts"
-    },
-    {
-      "id": "c33bd871-90db-44a0-8021-6c9fd328d346",
-      "date": "2024-03-04",
-      "item": "간식",
-      "amount": 3000,
-      "description": "탕후루",
       "userId": "yhnujm123",
       "createdBy": "ts"
     },
