@@ -1,24 +1,24 @@
-import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import api from "../../../api/api";
 import { AuthContext } from "../../../context/auth.context";
+import useUser from "../../../hooks/useUser";
 
 function Header() {
   const navigate = useNavigate();
   const initUserData = useLoaderData();
-  const { data: userData } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => api.user.getUserInfo(),
-    initialData: initUserData,
-  });
-  const avatar = userData && userData.avatar;
-  const nickname = userData && userData.nickname;
+  // const userInfo = {avatar: "",nickname:"", userId:""};
+  const { userInfo } = useUser(true, initUserData);
+  const avatar = userInfo && userInfo.avatar;
+  const nickname = userInfo && userInfo.nickname;
+  const accessToken = localStorage.getItem("accessToken");
   const { isAuthenticated, logOut } = useContext(AuthContext);
 
+
+
   const handleOnLoginClick = () => {
-    isAuthenticated ? logOut() : navigate("/login");
+    if (accessToken && isAuthenticated) logOut();
+    navigate("/login");
   };
 
   return (

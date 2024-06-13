@@ -1,18 +1,23 @@
 import axios from "axios";
+import ExpenditureAPI from "./expenditures.api";
 import UserAPI from "./user.api";
 
-const BASE_URL = "https://moneyfulpublicpolicy.co.kr";
+const USER_BASE_URL = "https://moneyfulpublicpolicy.co.kr";
+const EXPENDITURE_BASE_USER = "http://localhost:5000/";
 
 class API {
-  #axios;
+  #userAxios;
+  #expenditureAxios;
 
   user;
-  expenditures;
+  expenditure;
 
   constructor() {
-    this.#axios = axios.create({ baseURL: BASE_URL });
+    this.#userAxios = axios.create({ baseURL: USER_BASE_URL });
+    this.#expenditureAxios = axios.create({ baseURL: EXPENDITURE_BASE_USER });
 
-    this.user = new UserAPI(this.#axios);
+    this.user = new UserAPI(this.#userAxios);
+    this.expenditure = new ExpenditureAPI(this.#expenditureAxios) 
   }
 }
 

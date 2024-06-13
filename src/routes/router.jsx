@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "../components/Layout";
 import expenditureLoader from "../loaders/expenditure.loader";
 import userInfoLoader from "../loaders/userInfo.loader";
 import HomePage from "../pages/HomePage";
@@ -11,8 +10,7 @@ import Private from "./Private";
 
 const router = createBrowserRouter([
   {
-    element: <Layout />,
-    loader: () => userInfoLoader(),
+    element: <Private />,
     children: [
       {
         path: "/",
@@ -24,11 +22,6 @@ const router = createBrowserRouter([
         element: <PostDetailPage />,
         loader: expenditureLoader,
       },
-    ],
-  },
-  {
-    element: <Private />,
-    children: [
       {
         path: "/mypage",
         element: <MyPage />,

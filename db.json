@@ -71,40 +71,24 @@
       "userId": "asdf"
     },
     {
-      "id": "f20c42e3-94f2-45d2-901a-444af1a3260e",
-      "date": "2024-03-02",
-      "item": "간식",
-      "amount": "3000",
-      "description": "튀김",
-      "userId": "yhnujm123",
-      "createdBy": "ts"
-    },
-    {
-      "id": "cc8d25a9-1f4f-414c-8972-e27d19d9e9f3",
-      "date": "2024-03-05",
-      "item": "점심",
-      "amount": 6000,
-      "description": "햄버거",
-      "userId": "yhnujm123",
-      "createdBy": "ts"
-    },
-    {
-      "id": "e456cdec-7e11-4be9-823b-9d1f0691005b",
-      "date": "2024-02-01",
-      "item": "점심",
-      "amount": 20000,
-      "description": "탕수육",
-      "userId": "yhnujm123",
-      "createdBy": "ts"
-    },
-    {
-      "id": "9e1e34bd-b42e-4910-9207-ae282629d254",
-      "date": "2024-04-01",
-      "item": "간식",
-      "amount": 3000,
+      "id": "c23a005c-285a-4fb6-be97-1974d95856cb",
+      "date": "2024-03-01",
+      "item": "간식22",
+      "amount": "20000",
       "description": "떡볶이",
       "userId": "yhnujm123",
-      "createdBy": "ts"
+      "createdBy": "tssx1",
+      "month": 3
+    },
+    {
+      "id": "1bb04d29-b272-4e94-91b6-67a56f3283f5",
+      "date": "2024-03-06",
+      "item": "전자기기",
+      "amount": 200000,
+      "description": "아이팟",
+      "userId": "yhnujm123",
+      "createdBy": "tssx1",
+      "month": 3
     }
   ]
 }

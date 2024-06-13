@@ -1,24 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import styled from "styled-components";
-import jsonApi from "../../api/jsonApi";
-import { MonthContext } from "../../context/month.context";
+
+import useExpenditure from "../../hooks/useExpenditure";
 
 function Expenditures() {
   const initExpenditures = useLoaderData();
-  const { curMonth } = useContext(MonthContext);
-  const { data: expenditures } = useQuery({
-    queryKey: ["expenditures"],
-    queryFn: () => jsonApi.expenditures.getExpenditures(),
-    initialData: initExpenditures,
-  });
-
-  const monthExpenditures = expenditures.filter((expenditure) => {
-    const date = new Date(expenditure.date);
-    return date.getMonth() === curMonth;
-  });
-
+  const { monthExpenditures } = useExpenditure(true, initExpenditures);
   const [category, setCategory] = useState("date");
 
   monthExpenditures.sort(function compare(a, b) {

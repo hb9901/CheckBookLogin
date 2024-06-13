@@ -1,14 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import api from "../../api/api";
+import useUser from "../../hooks/useUser";
 
 function SignUp() {
   const navigate = useNavigate();
-  const { mutateAsync: signUp } = useMutation({
-    mutationFn: (data) => api.user.signUp(data),
-  });
+  const { signUp } = useUser();
   const idRef = useRef(null);
   const passwordRef = useRef(null);
   const nicknameRef = useRef(null);
@@ -23,8 +20,8 @@ function SignUp() {
       await signUp(data);
       alert("회원가입을 축하합니다!");
       navigate("/login");
-    } catch {
-      alert("회원가입 실패");
+    } catch (e) {
+      alert(e || "회원가입 실패");
     }
   };
 
@@ -47,7 +44,9 @@ function SignUp() {
         <InputLabel>닉네임</InputLabel>
         <Input type="text" ref={nicknameRef} placeholder="닉네임" />
       </InputForm>
-      <Btn onClick={handleClickRegister} $color="#a0a0a0">회원가입</Btn>
+      <Btn onClick={handleClickRegister} $color="#a0a0a0">
+        회원가입
+      </Btn>
       <Btn onClick={handleClickLogin} $color="#6C757D">
         로그인
       </Btn>

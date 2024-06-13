@@ -1,26 +1,15 @@
 import isInputValidate from "@/assets/js/isInputValidate";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
 import styled from "styled-components";
-import api from "../../api/api";
-import jsonApi from "../../api/jsonApi";
+
+import { useState } from "react";
+import useExpenditure from "../../hooks/useExpenditure";
+import useUser from "../../hooks/useUser";
 import { initExpenditure } from "./constants";
 
 function InputForm() {
-  const queryClient = useQueryClient();
+  const { userInfo } = useUser(true);
   const [expenditure, setExpenditure] = useState(initExpenditure);
-
-  const { mutateAsync: addExpenditureJson } = useMutation({
-    mutationFn: (expenditure) =>
-      jsonApi.expenditures.addExpenditure(expenditure),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["expenditures"]);
-    },
-  });
-  const { data: userInfo } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => api.user.getUserInfo(),
-  });
+  const { addExpenditure } = useExpenditure();
 
   const { id: userId, nickname } = userInfo
     ? userInfo
@@ -40,14 +29,16 @@ function InputForm() {
 
   const handleClickAdd = (e) => {
     e.preventDefault();
+    const month = new Date(expenditure.date).getMonth() + 1;
     const newExpenditure = {
       ...expenditure,
       id: crypto.randomUUID(),
       userId,
       createdBy: nickname,
+      month,
     };
     if (!isInputValidate(expenditure)) return;
-    addExpenditureJson(newExpenditure);
+    addExpenditure(newExpenditure);
     setExpenditure(initExpenditure);
   };
 

@@ -1,7 +1,7 @@
-import jsonApi from "../api/jsonApi";
+import api from "../api/api";
 
 async function expenditureLoader() {
-  const expenditures = await jsonApi.expenditures.getExpenditures();
+  const expenditures = await api.expenditure.getExpenditures();
 
   return expenditures;
 }

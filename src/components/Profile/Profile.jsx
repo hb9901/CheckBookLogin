@@ -1,20 +1,14 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import api from "../../api/api";
+import useUser from "../../hooks/useUser";
 
 function Profile() {
+  const navigate = useNavigate();
   const { nickname, avatar } = useLoaderData();
   const nicknameRef = useRef();
   const [imgFile, setImgFile] = useState(avatar);
-  const queryClient = useQueryClient();
-  const { mutateAsync: updateUserInfo } = useMutation({
-    mutationFn: (formData) => api.user.updateUserInfo(formData),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["expenditures"]);
-    },
-  });
+  const { updateUserInfo } = useUser();
 
   const handleFileChange = ({ target }) => {
     const [file] = target.files;
@@ -24,11 +18,19 @@ function Profile() {
   };
 
   const handleUpdateClick = async () => {
-    const formData = new FormData();
-    formData.append("nickname", nicknameRef.current.value);
-    formData.append("avatar", imgFile);
+    try {
+      const formData = new FormData();
+      formData.append("nickname", nicknameRef.current.value);
+      formData.append("avatar", imgFile);
 
-    await updateUserInfo(formData);
+      await updateUserInfo(formData);
+
+      alert("프로필이 수정되었습니다");
+      navigate("/");
+    } catch (e) {
+      alert(e);
+      navigate("/login")
+    }
   };
 
   return (

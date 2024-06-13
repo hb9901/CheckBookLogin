@@ -1,31 +1,16 @@
 import isInputValidate from "@/assets/js/isInputValidate";
-import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRef } from "react";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import api from "../../api/api";
-import jsonApi from "../../api/jsonApi";
 import { useModal } from "../../context/useModal";
+import useExpenditure from "../../hooks/useExpenditure";
+import useUser from "../../hooks/useUser";
 
 function Expenditure() {
   const initExpenditures = useLoaderData();
-  const { data: userInfo } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => api.user.getUserInfo(),
-  });
-  const { data: monthExpenditures } = useQuery({
-    queryKey: ["expenditures"],
-    queryFn: () => jsonApi.expenditures.getExpenditures(),
-    initialData: initExpenditures,
-  });
-  const { mutateAsync: updateExpenditure } = useMutation({
-    mutationFn: ({ expenditureId, expenditure }) =>
-      jsonApi.expenditures.updateExpenditure({ expenditureId, expenditure }),
-  });
-  const { mutateAsync: deleteExpenditure } = useMutation({
-    mutationFn: (expenditureId) =>
-      jsonApi.expenditures.deleteExpenditure(expenditureId),
-  });
+  const { userInfo } = useUser(true);
+  const { monthExpenditures, updateExpenditure, deleteExpenditure } =
+    useExpenditure(true, initExpenditures);
 
   const params = useParams();
   const navigate = useNavigate();
