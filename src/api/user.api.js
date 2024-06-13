@@ -26,7 +26,7 @@ class UserAPI {
 
   async logIn(data) {
     try {
-      const path = "/login?expiresIn=10s";
+      const path = "/login?expiresIn=30m";
       const response = await this.#axios.post(path, data);
       const responseData = response.data;
 

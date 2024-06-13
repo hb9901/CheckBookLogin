@@ -3,7 +3,7 @@ import ExpenditureAPI from "./expenditures.api";
 import UserAPI from "./user.api";
 
 const USER_BASE_URL = "https://moneyfulpublicpolicy.co.kr";
-const EXPENDITURE_BASE_USER = "http://localhost:5000/";
+const EXPENDITURE_BASE_USER = "https://pickled-repeated-daisy.glitch.me";
 
 class API {
   #userAxios;
