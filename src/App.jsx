@@ -1,7 +1,6 @@
 import { RouterProvider } from "react-router-dom";
 import GlobalStyle from "./GlobalStyle";
-import { AuthProvider } from "./provider/AuthProvider";
-import ExpenditureProvider from "./provider/ExpenditureProvider";
+
 import { ModalProvider } from "./provider/ModalProvider";
 import MonthProvider from "./provider/MonthProvider";
 import QueryProvider from "./provider/QueryProvider";
@@ -12,14 +11,10 @@ function App() {
     <>
       <QueryProvider>
         <ModalProvider>
-          <AuthProvider>
-            <ExpenditureProvider>
-              <MonthProvider>
-                <GlobalStyle />
-                <RouterProvider router={router} />
-              </MonthProvider>
-            </ExpenditureProvider>
-          </AuthProvider>
+          <MonthProvider>
+            <GlobalStyle />
+            <RouterProvider router={router} />
+          </MonthProvider>
         </ModalProvider>
       </QueryProvider>
     </>

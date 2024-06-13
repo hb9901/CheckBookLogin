@@ -1,14 +1,15 @@
 import { create } from "zustand";
 
-const userStore = create((set) => ({
-  user: null,
+const useUserStore = create((set) => ({
   isAuthenticated: false,
-  setUser: (user) => set({ user }),
-  setLoggedIn: (isAuthenticated) => set({ isAuthenticated }),
-  logOut: () => {
+  setLogIn: (accessToken) => {
+    localStorage.setItem("accessToken", accessToken);
+    set({ isAuthenticated: true });
+  },
+  setLogOut: () => {
     localStorage.removeItem("accessToken");
-    set({user: null, isAuthenticated: false});
-  }
+    set({ isAuthenticated: false });
+  },
 }));
 
-export default userStore;
+export default useUserStore;

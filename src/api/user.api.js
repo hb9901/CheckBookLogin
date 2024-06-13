@@ -1,4 +1,5 @@
 import { AxiosError } from "axios";
+import useUserStore from "../zustand/user.store";
 
 class UserAPI {
   #axios;
@@ -43,7 +44,7 @@ class UserAPI {
     try {
       const path = "/user";
       const response = await this.#axios.get(path, {
-      headers: {
+        headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
@@ -53,6 +54,7 @@ class UserAPI {
     } catch (err) {
       alert("userInfo:AccessToken이 만료되었습니다!");
       localStorage.clear();
+      useUserStore.getState().setLogOut();
     }
   }
 

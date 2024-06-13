@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import Layout from "../components/Layout";
-import { AuthContext } from "../context/auth.context";
+import useUser from "../hooks/useUser";
 
 function Private() {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useUser();
   const accessToken = localStorage.getItem("accessToken");
 
   if (!isAuthenticated || !accessToken) {

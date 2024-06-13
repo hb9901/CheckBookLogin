@@ -1,20 +1,14 @@
-import { useContext } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { AuthContext } from "../../../context/auth.context";
 import useUser from "../../../hooks/useUser";
 
 function Header() {
   const navigate = useNavigate();
   const initUserData = useLoaderData();
-  // const userInfo = {avatar: "",nickname:"", userId:""};
-  const { userInfo } = useUser(true, initUserData);
+  const { userInfo, isAuthenticated, logOut } = useUser(true, initUserData);
   const avatar = userInfo && userInfo.avatar;
   const nickname = userInfo && userInfo.nickname;
   const accessToken = localStorage.getItem("accessToken");
-  const { isAuthenticated, logOut } = useContext(AuthContext);
-
-
 
   const handleOnLoginClick = () => {
     if (accessToken && isAuthenticated) logOut();

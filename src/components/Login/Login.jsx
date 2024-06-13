@@ -1,13 +1,11 @@
-import { useContext, useRef } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { AuthContext } from "../../context/auth.context";
 import useUser from "../../hooks/useUser";
 
 function Login() {
   const navigate = useNavigate();
-  const { logIn: setLogIn } = useContext(AuthContext);
-  const { logIn } = useUser();
+  const { logIn, setLogIn } = useUser();
   const idRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -17,9 +15,9 @@ function Login() {
       const password = passwordRef.current.value;
       const data = { id, password };
 
-      const { userId, avatar, nickname, accessToken } = await logIn(data);
+      const { accessToken } = await logIn(data);
 
-      setLogIn({ userId, avatar, nickname, accessToken });
+      setLogIn(accessToken);
       alert("로그인 성공!");
       navigate("/");
     } catch (e) {

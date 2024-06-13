@@ -1,8 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useShallow } from "zustand/react/shallow";
 import api from "../api/api";
+import useUserStore from "../zustand/user.store";
 
 function useUser(enabled = false, initialData) {
   const queryClient = useQueryClient();
+  const { isAuthenticated, setLogIn, setLogOut } = useUserStore(
+    useShallow((state) => ({
+      isAuthenticated: state.isAuthenticated,
+      setLogIn: state.setLogIn,
+      setLogOut: state.setLogOut,
+    }))
+  );
 
   const { data: userInfo } = useQuery({
     queryKey: ["user"],
@@ -26,7 +35,15 @@ function useUser(enabled = false, initialData) {
     },
   });
 
-  return { userInfo, signUp, logIn, updateUserInfo };
+  return {
+    isAuthenticated,
+    setLogIn,
+    setLogOut,
+    userInfo,
+    signUp,
+    logIn,
+    updateUserInfo,
+  };
 }
 
 export default useUser;
