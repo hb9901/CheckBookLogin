@@ -33,9 +33,6 @@ function useUser(enabled = false, initialData) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
-    onError:(e) =>{
-      alert(e);
-    }
   });
 
   return {
