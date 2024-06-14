@@ -23,13 +23,9 @@ function Profile() {
       formData.append("nickname", nicknameRef.current.value);
       formData.append("avatar", imgFile);
 
-      
       await updateUserInfo(formData);
-
-      alert("프로필이 수정되었습니다");
     } catch (e) {
       alert(e);
-      navigate("/");
     }
   };
 

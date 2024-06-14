@@ -52,15 +52,13 @@ class UserAPI {
 
       return responseData;
     } catch (err) {
-      alert("userInfo:AccessToken이 만료되었습니다!");
-      localStorage.clear();
+      alert("AccessToken이 만료되었습니다!");
       useUserStore.getState().setLogOut();
     }
   }
 
   async updateUserInfo(formData) {
     const accessToken = localStorage.getItem("accessToken");
-    console.log(formData);
     try {
       const path = "/profile";
       const response = await this.#axios.patch(path, formData, {
@@ -68,17 +66,16 @@ class UserAPI {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${accessToken}`,
         },
-      });
+      })
       const responseData = response.data;
-
       return responseData;
     } catch (err) {
       if (!accessToken) {
         alert("AccessToken이 만료되었습니다!");
-        localStorage.clear();
+        useUserStore.getState().setLogOut();
       }
       else{
-        alert(err.response?.message);
+        alert("이미지 용량을 초과하였습니다");
       }
     }
   }
