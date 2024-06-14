@@ -1,10 +1,9 @@
 import { useRef, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 import useUser from "../../hooks/useUser";
 
 function Profile() {
-  const navigate = useNavigate();
   const { nickname, avatar } = useLoaderData();
   const nicknameRef = useRef();
   const [imgFile, setImgFile] = useState(avatar);

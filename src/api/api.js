@@ -16,15 +16,6 @@ class API {
     this.#userAxios = axios.create({ baseURL: USER_BASE_URL });
     this.#expenditureAxios = axios.create({ baseURL: EXPENDITURE_BASE_USER });
 
-    this.#userAxios.interceptors.response.use(
-      (config) => {
-        return config;
-      },
-      (error) => {
-        console.log("123", error);
-        return Promise.reject(error);
-      }
-    );
     this.user = new UserAPI(this.#userAxios);
     this.expenditure = new ExpenditureAPI(this.#expenditureAxios);
   }
