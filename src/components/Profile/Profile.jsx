@@ -26,10 +26,9 @@ function Profile() {
       await updateUserInfo(formData);
 
       alert("프로필이 수정되었습니다");
-      navigate("/");
     } catch (e) {
       alert(e);
-      navigate("/login")
+      navigate("/login");
     }
   };
 

@@ -5,13 +5,12 @@ import useUser from "../../../hooks/useUser";
 function Header() {
   const navigate = useNavigate();
   const initUserData = useLoaderData();
-  const { userInfo, isAuthenticated, logOut } = useUser(true, initUserData);
+  const { userInfo, isAuthenticated, setLogOut } = useUser(true, initUserData);
   const avatar = userInfo && userInfo.avatar;
   const nickname = userInfo && userInfo.nickname;
-  const accessToken = localStorage.getItem("accessToken");
 
   const handleOnLoginClick = () => {
-    if (accessToken && isAuthenticated) logOut();
+    if (isAuthenticated) setLogOut();
     navigate("/login");
   };
 
@@ -73,6 +72,7 @@ const UserInfo = styled.div`
 `;
 
 const UserImg = styled.div`
+  display: flex;
   width: 40px;
   height: 40px;
 

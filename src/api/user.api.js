@@ -60,6 +60,7 @@ class UserAPI {
 
   async updateUserInfo(formData) {
     const accessToken = localStorage.getItem("accessToken");
+    console.log(formData);
     try {
       const path = "/profile";
       const response = await this.#axios.patch(path, formData, {
@@ -72,8 +73,13 @@ class UserAPI {
 
       return responseData;
     } catch (err) {
-      alert("AccessToken이 만료되었습니다!");
-      localStorage.clear();
+      if (!accessToken) {
+        alert("AccessToken이 만료되었습니다!");
+        localStorage.clear();
+      }
+      else{
+        alert(err.response?.message);
+      }
     }
   }
 }
