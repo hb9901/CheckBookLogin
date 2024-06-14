@@ -10,10 +10,6 @@ import Private from "./Private";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <LoginPage />,
-  },
-  {
     element: <Private />,
     children: [
       {
@@ -34,7 +30,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/login",
+    path: "/",
     element: <LoginPage />,
   },
   {
