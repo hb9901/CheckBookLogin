@@ -10,10 +10,14 @@ import Private from "./Private";
 
 const router = createBrowserRouter([
   {
+    path: "/",
+    element: <LoginPage />,
+  },
+  {
     element: <Private />,
     children: [
       {
-        path: "/",
+        path: "/home",
         element: <HomePage />,
         loader: expenditureLoader,
       },

@@ -19,14 +19,14 @@ function SignUp() {
 
       await signUp(data);
       alert("회원가입을 축하합니다!");
-      navigate("/login");
+      navigate("/");
     } catch (e) {
       alert(e || "회원가입 실패");
     }
   };
 
   const handleClickLogin = async () => {
-    navigate("/login");
+    navigate("/");
   };
 
   return (

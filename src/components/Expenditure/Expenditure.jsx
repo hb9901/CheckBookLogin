@@ -38,13 +38,13 @@ function Expenditure() {
       expenditureId: expenditure.id,
       expenditure: modifiedExpenditure,
     });
-    navigate("/");
+    navigate("/home");
   };
 
   const handleClickModalDelete = () => {
     deleteExpenditure(expenditure.id);
     modal.close();
-    navigate("/");
+    navigate("/home");
   };
 
   const handleClickDelete = () => {
@@ -55,7 +55,7 @@ function Expenditure() {
   };
 
   const handleClickGoBack = () => {
-    navigate("/");
+    navigate("/home");
   };
 
   return (

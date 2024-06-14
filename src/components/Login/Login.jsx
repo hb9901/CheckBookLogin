@@ -19,7 +19,7 @@ function Login() {
 
       setLogIn(accessToken);
       alert("로그인 성공!");
-      navigate("/");
+      navigate("/home");
     } catch (e) {
       alert(e || "로그인 실패");
     }

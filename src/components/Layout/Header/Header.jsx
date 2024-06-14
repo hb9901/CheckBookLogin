@@ -11,13 +11,13 @@ function Header() {
 
   const handleOnLoginClick = () => {
     if (isAuthenticated) setLogOut();
-    navigate("/login");
+    navigate("/");
   };
 
   return (
     <HeaderWrapper>
       <HeaderLeft>
-        <Link to={"/"}>Home</Link>
+        <Link to={"/home"}>Home</Link>
         <Link to={"/mypage"}>내 프로필</Link>
       </HeaderLeft>
       <HeaderRight>
